@@ -3,10 +3,13 @@ import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import Image from 'next/image';
 import { useState } from "react";
 import { toast } from "react-toastify";
+import {useRouter} from "next/navigation";
 
 const ListingCard = ({ listing }) => {
     const [status, setStatus] = useState(listing.isActive);
     const { country, city, state } = listing.address;
+    const router = useRouter();
+
     const location = `${country.toUpperCase()}, ${city}, ${state}`;
     console.log(listing);
 
@@ -16,6 +19,7 @@ const ListingCard = ({ listing }) => {
 
     const handleEdit = async () => {
         console.log('handleEdit:');
+        router.push(`/listings/update/${listing.id}`);
     };
 
     const handleDelete = async () => {
@@ -37,6 +41,8 @@ const ListingCard = ({ listing }) => {
                 console.log('ok');
                 if (res.status === 'SUCCESS') {
                     console.log('success');
+                    router.push('/listings');
+                    router.refresh();
                     toast.success('Listing deleted successfully!');
                 } else {
                     toast.error('Deletion failed: ' + (res.message || 'Unknown error'));
@@ -64,6 +70,7 @@ const ListingCard = ({ listing }) => {
                         src={listing.photo}
                         width={270}
                         height={180}
+                        priority={true}  // Add priority property here
                     />
                 </CardBody>
                 <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '10px' }}>
