@@ -1,5 +1,6 @@
 package com.realtura.listingsservice.controller;
 
+import com.realtura.listingsservice.dto.request.ListingDeleteRequest;
 import com.realtura.listingsservice.dto.request.ListingSaveRequest;
 import com.realtura.listingsservice.dto.request.ListingSearchRequest;
 import com.realtura.listingsservice.dto.response.CreateResponse;
@@ -35,15 +36,12 @@ public class ListingController {
 
 
     @PutMapping("/update/{id}")
-    public void update(@PathVariable Long id, @RequestBody ListingSaveRequest request) {
-        listingService.update(id, request);
+    public ResponseEntity<GenericResponse<?>> update(@PathVariable Long id, @RequestBody ListingSaveRequest request) {
+        return new ResponseEntity<>(listingService.update(id, request), HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Long id) {
-        listingService.delete(id);
+    @DeleteMapping("/delete")
+    public ResponseEntity<GenericResponse<?>> delete(@RequestBody ListingDeleteRequest request) {
+        return new ResponseEntity<>(listingService.delete(request), HttpStatus.OK);
     }
-
-
-
 }

@@ -1,6 +1,7 @@
 package com.realtura.listingsservice.service;
 
 import com.realtura.listingsservice.converter.ListingConverter;
+import com.realtura.listingsservice.dto.request.ListingDeleteRequest;
 import com.realtura.listingsservice.dto.request.ListingSaveRequest;
 import com.realtura.listingsservice.dto.request.ListingSearchRequest;
 import com.realtura.listingsservice.dto.response.CreateResponse;
@@ -10,6 +11,7 @@ import com.realtura.listingsservice.exception.ExceptionMessages;
 import com.realtura.listingsservice.model.Address;
 import com.realtura.listingsservice.model.Listing;
 import com.realtura.listingsservice.repository.ListingRepository;
+import com.realtura.listingsservice.repository.specification.ListingDeleteSpecification;
 import com.realtura.listingsservice.repository.specification.ListingSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -143,14 +145,17 @@ public class ListingService {
     }
 
     @DeleteMapping
-    public GenericResponse<?> delete(Long id) {
-        Optional<Listing> listingOptional = listingRepository.findById(id);
-        if (listingOptional.isEmpty()) {
+    public GenericResponse<?> delete(ListingDeleteRequest request) {
+        Specification<Listing> listingDeleteSpecification = ListingDeleteSpecification.initListingSpecification(request);
+
+        List<Listing> listings = listingRepository.findAll(listingDeleteSpecification);
+
+        if (listings.isEmpty()) {
             log.error(ExceptionMessages.LISTING_NOT_FOUND);
             return GenericResponse.failed(ExceptionMessages.LISTING_NOT_FOUND);
         }
-        listingRepository.deleteById(id);
-        log.info("Listing deleted" + id);
+        listingRepository.deleteById(request.getId());
+        log.info("Listing deleted" + request.getId());
         return GenericResponse.success("listing deleted");
     }
 }
