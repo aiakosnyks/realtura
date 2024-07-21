@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.time.Period;
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,7 +21,7 @@ public class Subscription {
         @Column(name = "user_id")
         private Long userId;
         @Column(name = "subscription_duration")
-        private Period subscriptionDuration = Period.ofDays(0);
+        private Integer subscriptionDuration = 0;
         @Column(name = "subscribed_until")
         private LocalDateTime subscribedUntil = LocalDateTime.now();
         private Integer credits = 0;
