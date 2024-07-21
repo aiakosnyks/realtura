@@ -4,6 +4,9 @@ import ListingCard from "@/app/components/ListingCard";
 import styles from './page.module.css'
 import {useAuth} from "@/app/context/AuthContext";
 import {useEffect, useState} from "react";
+import {Button} from "antd";
+import {router} from "next/client";
+import {useRouter} from "next/navigation";
 
 const page = 0;
 const size = 10;
@@ -12,6 +15,7 @@ const size = 10;
 const Dashboard = () => {
     const { userId } = useAuth();
     const [listings, setListings] = useState([])
+    const router = useRouter();
 
     useEffect( () => {
         const fetchListings = async () => {
@@ -33,10 +37,14 @@ const Dashboard = () => {
         };
         fetchListings();
     }, []);
-
+    const addNewListing =() => {
+        console.log('Create listing page routed');
+        router.push("/listings/create");
+    }
     console.log(listings);
     return (
         <div className={styles.main} >
+            <Button onClick={addNewListing}>Add New Listing</Button>
             <div className={styles.card}>
                 {listings && listings.map((listing) => (
                     <ListingCard key={listing.id} listing={listing} />
