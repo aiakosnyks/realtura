@@ -57,7 +57,7 @@ const UpdateListing = ({ params }) => {
             const res = await response.json();
             if (response.ok && res.status === 'SUCCESS') {
                 message.success('Listing updated successfully!');
-                router.push('/listings');
+                router.push('/listings/dashboard');
             } else {
                 message.error('Update failed: ' + (res.message || 'Unknown error'));
             }

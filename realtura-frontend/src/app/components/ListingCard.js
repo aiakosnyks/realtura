@@ -1,20 +1,60 @@
 'use client';
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import Image from 'next/image';
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { toast } from "react-toastify";
 import {useRouter} from "next/navigation";
+import {message} from "antd";
+import {useAuth} from "@/app/context/AuthContext";
 
 const ListingCard = ({ listing }) => {
     const [status, setStatus] = useState(listing.isActive);
+    const [isInitialRender, setIsInitialRender] = useState(true);
+
     const { country, city, state } = listing.address;
     const router = useRouter();
+    const { userId } = useAuth();
 
     const location = `${country.toUpperCase()}, ${city}, ${state}`;
-    console.log(listing);
 
-    const handleStatus = async () => {
+    useEffect(() => {
+        if (isInitialRender) {
+            setIsInitialRender(false);
+            return; // Skip the initial render
+        }
+        const updateStatus = async () => {
+            console.log('test1');
+
+            try {
+                const response = await fetch(`http://localhost:8081/api/v1/listings/update/${listing.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({isActive: status, userId:userId}),
+                });
+                console.log('test2');
+
+                const res = await response.json();
+                console.log('resjson:', JSON.stringify(res, null, 2)); // Improved logging
+
+                if (response.ok && res.status === 'SUCCESS') {
+                    console.log('test3');
+                    message.success('Listing updated successfully!');
+                    router.push('/listings/mylistings');
+                } else {
+                    message.error('Update failed: ' + (res.message || 'Unknown error'));
+                }
+            } catch (error) {
+                message.error('An error occurred: ' + (error.message || 'Unknown error'));
+            }
+        };
+        updateStatus();
+    }, [status]);
+    const handleStatus = async (e) => {
+        e.preventDefault();
         console.log('handleStatus:');
+        setStatus(prevStatus => !prevStatus);
     };
 
     const handleEdit = async () => {

@@ -37,7 +37,6 @@ const Dashboard = () => {
     console.log(listings);
     return (
         <div className={styles.main} >
-            <h1 className={styles.description}>İlanlar</h1>
             <div className={styles.card}>
                 {listings && listings.map((listing) => (
                     <ListingCard key={listing.id} listing={listing} />
