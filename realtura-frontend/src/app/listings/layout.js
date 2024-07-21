@@ -1,3 +1,4 @@
+import {AuthProvider} from "@/app/context/AuthContext";
 
 export const metadata = {
   title: "Create Next App",
@@ -7,8 +8,9 @@ export const metadata = {
 export default function ListingsLayout({ children }) {
   return (
       <div>
-          <h1>Listings</h1>
-          {children}
+          <AuthProvider>
+              {children}
+          </AuthProvider>
       </div>
   );
 }

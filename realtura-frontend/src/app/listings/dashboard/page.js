@@ -1,8 +1,6 @@
-import Modal from '../components/Modal';
-import ListingCard from '../components/ListingCard'; // Adjusted to reflect the correct component name
-import {Card, CardBody, CardFooter, Image} from "@nextui-org/react";
+import ListingCard from "@/app/components/ListingCard";
 import styles from './page.module.css'
-
+import ListingCardReadOnly from "@/app/components/ListingCardReadOnly";
 
 const page = 0;
 const size = 10;
@@ -23,7 +21,7 @@ const fetchListings = async () => {
     }
 };
 
-const Main = async () => {
+const Dashboard = async () => {
     const listings = await fetchListings();
     console.log(listings);
     return (
@@ -31,7 +29,7 @@ const Main = async () => {
             <h1 className={styles.description}>İlanlar</h1>
             <div className={styles.card}>
                 {listings && listings.map((listing) => (
-                    <ListingCard key={listing.id} listing={listing} />
+                    <ListingCardReadOnly key={listing.id} listing={listing} />
                 ))}
             </div>
 
@@ -39,4 +37,4 @@ const Main = async () => {
     );
 };
 
-export default Main;
+export default Dashboard;

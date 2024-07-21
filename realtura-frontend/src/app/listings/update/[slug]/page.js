@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Form, Input, Button, InputNumber, Select, message } from 'antd';
 import TextArea from "antd/es/input/TextArea";
+import {useAuth} from "@/app/context/AuthContext";
 
 const page = 0;
 const size = 10;
 
 const UpdateListing = ({ params }) => {
+    const { userId, logout } = useAuth();
     const router = useRouter();
     const [form] = Form.useForm(); // Initialize the form instance
     const [listing, setListing] = useState(null);
@@ -42,7 +44,7 @@ const UpdateListing = ({ params }) => {
     }, [slug, form]);
 
     const onFinish = async (values) => {
-        const updatedValues = { ...values, userId: 1 };
+        const updatedValues = { ...values, userId: userId};
         try {
             const response = await fetch(`http://localhost:8081/api/v1/listings/update/${slug}`, {
                 method: 'PUT',

@@ -4,9 +4,14 @@ import {Button, Checkbox, Form, Input, InputNumber, Select, Upload} from 'antd';
 import {UploadOutlined} from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
 import {toast} from "react-toastify";
+import {useAuth} from "@/app/context/AuthContext";
     const App = () => {
+        const { userId, logout } = useAuth();
+
         const onFinish = async (values) => {
             console.log('Success:', values);
+            const updatedValues = { ...values, userId: userId};
+
             try {
                 console.log('Success2:');
                 const response = await fetch('http://localhost:8081/api/v1/listings', {
@@ -14,7 +19,7 @@ import {toast} from "react-toastify";
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(values),
+                    body: JSON.stringify(updatedValues),
                 });
                 console.log('Success3');
 
@@ -76,14 +81,6 @@ import {toast} from "react-toastify";
             autoComplete="off"
         >
             {/* ... other form items ... */}
-
-            <Form.Item
-                label="User ID"
-                name="userId"
-                rules={[{required: true, message: 'Please input the user ID!'}]}
-            >
-                <InputNumber/>
-            </Form.Item>
 
             <Form.Item
                 label="Title"

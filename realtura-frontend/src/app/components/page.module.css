@@ -1,10 +1,9 @@
 .main {
   display: flex;
-  flex-direction: column;
+  vertical-align: middle;
+  justify-content: space-evenly;
   align-items: center;
-  padding: 20px;
-  background-color: #f5f5f5;
-  min-height: 100vh;
+
 }
 
 .description {
@@ -14,10 +13,12 @@
 }
 
 .card {
+  color: #333333;
+  background-color: aliceblue;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
+  gap: 80px;
   max-width: 1200px;
   width: 100%;
 }
@@ -34,8 +35,9 @@
 }
 
 .card-header {
-  padding: 20px;
-  border-bottom: 1px solid #eee;
+  justify-content: space-between;
+  padding: 30px;
+  border-bottom: 5px solid #eee;
 }
 
 .card-header p {
@@ -61,11 +63,4 @@
 .card-body img {
   width: 100%;
   border-radius: 15px;
-}
-
-#loginForm {
-  color: black;
-  background-color: whitesmoke;
-  align-content: center;
-  flex: auto;
 }
