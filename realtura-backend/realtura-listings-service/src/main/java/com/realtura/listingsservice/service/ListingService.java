@@ -56,7 +56,7 @@ public class ListingService {
 
         Page<Listing> listings = listingRepository.findAll(listingSpecification, pageRequest);
 
-        log.info("db'den getirildi. subscriptions size:{}", listings.getSize());
+        log.info("db'den getirildi. listing size:{}", listings.getSize());
 
         return ListingConverter.toResponse(listings.stream().toList());
     }
@@ -136,7 +136,7 @@ public class ListingService {
             }
 
             listingRepository.save(listing);
-            return GenericResponse.success("subscriptions updated");
+            return GenericResponse.success("listing is updated");
         }
         log.error(ExceptionMessages.LISTING_NOT_FOUND);
         return GenericResponse.failed(ExceptionMessages.LISTING_NOT_FOUND);
@@ -154,6 +154,6 @@ public class ListingService {
         }
         listingRepository.deleteById(request.getId());
         log.info("Listing deleted" + request.getId());
-        return GenericResponse.success("subscriptions deleted");
+        return GenericResponse.success("listing deleted");
     }
 }
