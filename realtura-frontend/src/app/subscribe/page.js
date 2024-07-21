@@ -50,7 +50,6 @@ const Subscribe = () => {
 
     return (
         <div>
-            <h1>Login</h1>
             <Form
                 name="listing"
                 labelCol={{span: 8}}
