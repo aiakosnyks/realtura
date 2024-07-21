@@ -24,7 +24,7 @@ const UpdateListing = ({ params }) => {
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ page, size, id: slug, userId: 1 }),
+                        body: JSON.stringify({ page, size, id: slug, userId: userId }),
                     });
                     const res = await response.json();
                     console.log('listings:', JSON.stringify(res.data, null, 2)); // Improved logging

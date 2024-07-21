@@ -3,6 +3,7 @@ package com.realtura.userservice.service;
 import com.realtura.userservice.converter.UserConverter;
 import com.realtura.userservice.dto.request.UserLoginRequest;
 import com.realtura.userservice.dto.request.UserSaveRequest;
+import com.realtura.userservice.dto.response.CreateResponse;
 import com.realtura.userservice.dto.response.GenericResponse;
 import com.realtura.userservice.exception.ExceptionMessages;
 import com.realtura.userservice.exception.RealturaException;
@@ -22,7 +23,7 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
 
-    public void save(UserSaveRequest request) {
+    public GenericResponse<CreateResponse> save(UserSaveRequest request) {
         Optional<User> foundUser = userRepository.findByEmail(request.getEmail());
 
         if (foundUser.isPresent()) {
@@ -31,8 +32,9 @@ public class UserService {
         }
 
         User user = UserConverter.toUser(request);
-        userRepository.save(user);
+        User created = userRepository.save(user);
         log.info("user created. {}", user.getEmail());
+        return GenericResponse.success(new CreateResponse(created.getId()));
     }
 
     public List<User> getUserList() {

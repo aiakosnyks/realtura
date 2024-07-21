@@ -33,9 +33,8 @@ public class ListingService {
 
     public GenericResponse<CreateResponse> save(ListingSaveRequest request) {
         Listing listing = ListingConverter.toListing(request, request.getAddress());
-        listingRepository.save(listing);
-
-        return GenericResponse.success(new CreateResponse(listing.getId()));
+        Listing createdListing= listingRepository.save(listing);
+        return GenericResponse.success(new CreateResponse(createdListing.getId()));
     }
 
 //    public List<Listing> getByZipCode(String zipCode) {
@@ -73,9 +72,6 @@ public class ListingService {
                 log.error(ExceptionMessages.LISTING_NOT_FOUND);
                 return GenericResponse.failed(ExceptionMessages.LISTING_NOT_FOUND);
             }
-            if (request.getUserId() != null) {
-                listing.setUserId(request.getUserId());
-            }
             if (request.getDescription() != null) {
                 listing.setDescription(request.getDescription());
             }
@@ -106,7 +102,9 @@ public class ListingService {
             if (request.getIsActive() != null) {
                 listing.setActive(request.getIsActive());
             }
-
+            if (request.getTitle() != null) {
+                listing.setTitle(request.getTitle());
+            }
             if (request.getAddress() != null) {
                 Address address = listing.getAddress();
                 Address newAddress = request.getAddress();
