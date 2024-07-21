@@ -83,7 +83,7 @@ const Dashboard = () => {
         const fetchSubscriptions = async () => {
             console.log('subscriptions1:', userId);
             try {
-                const response = await fetch(`http://localhost:8051/api/v1/subscriptions/1`, {
+                const response = await fetch(`http://localhost:8051/api/v1/subscriptions/${userId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
