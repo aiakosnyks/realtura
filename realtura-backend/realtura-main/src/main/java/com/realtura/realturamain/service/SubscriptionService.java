@@ -74,9 +74,13 @@ public class SubscriptionService {
         }
     }
 
-    public Subscription getSubscriptionsByUserId(Long userId) {
-        return subscriptionRepository.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("Subscription not found for user: " + userId));
+    public GenericResponse<Subscription> getSubscriptionsByUserId(Long userId) {
+        Optional<Subscription> subscription = subscriptionRepository.findByUserId(userId);
+        if (subscription.isEmpty()) {
+            log.error("User " + userId + " not found");
+            throw new RuntimeException("User not found");
+        }
+        return GenericResponse.success(subscription.get());
     }
 }
 

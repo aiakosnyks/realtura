@@ -23,8 +23,7 @@ public class SubscriptionController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<Subscription> getSubscriptionByUserId(@PathVariable Long userId) {
-        Subscription subscription= subscriptionService.getSubscriptionsByUserId(userId);
-        return ResponseEntity.ok(subscription);
+    public ResponseEntity<GenericResponse<Subscription>> getSubscriptionByUserId(@PathVariable Long userId) {
+        return new ResponseEntity<>(subscriptionService.getSubscriptionsByUserId(userId), HttpStatus.OK);
     }
 }

@@ -17,6 +17,18 @@
     flex-grow: 1;
 }
 
+.subscriptionInfo {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 600px; /* Adjust as needed */
+    margin: 20px; /* Adjust as needed */
+}
+
+.subscriptionInfo > span {
+    flex-grow: 1;
+}
+
 .description {
     font-size: 2rem;
     color: #333;

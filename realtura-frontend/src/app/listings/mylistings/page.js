@@ -15,6 +15,7 @@ const size = 10;
 const Dashboard = () => {
     const { userId } = useAuth();
     const [listings, setListings] = useState([])
+    const [subscriptions, setSubscriptions] = useState([])
     const router = useRouter();
 
     useEffect( () => {
@@ -35,8 +36,71 @@ const Dashboard = () => {
                 console.error('Error fetching listings:', error);
             }
         };
+
+        const fetchSubscriptions = async () => {
+            console.log('subscriptions1:', userId);
+            try {
+                const response = await fetch(`http://localhost:8051/api/v1/subscriptions/1`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                console.log('subscriptions2');
+
+                const res =await response.json();
+                setSubscriptions(res.data)
+                console.log('subscription:', JSON.stringify(res.data, null, 2));
+            } catch (error) {
+                console.error('Error fetching listings:', error);
+            }
+        };
         fetchListings();
+        fetchSubscriptions();
     }, []);
+
+
+    useEffect( () => {
+        const fetchListings = async () => {
+
+            try {
+                const response = await fetch('http://localhost:8081/api/v1/listings/getAllByFilter', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ page, size, userId: userId }),
+                });
+                const res =await response.json();
+                setListings(res.data)
+                console.log('listings:', JSON.stringify(res.data, null, 2)); // Improved logging
+            } catch (error) {
+                console.error('Error fetching listings:', error);
+            }
+        };
+
+        const fetchSubscriptions = async () => {
+            console.log('subscriptions1:', userId);
+            try {
+                const response = await fetch(`http://localhost:8051/api/v1/subscriptions/1`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                console.log('subscriptions2');
+
+                const res =await response.json();
+                setSubscriptions(res.data)
+                console.log('subscription:', JSON.stringify(res.data, null, 2));
+            } catch (error) {
+                console.error('Error fetching listings:', error);
+            }
+        };
+        fetchListings();
+        fetchSubscriptions();
+    }, [userId]);
+
     const addNewListing =() => {
         console.log('Create listing page routed');
         router.push("/listings/create");
@@ -53,6 +117,11 @@ const Dashboard = () => {
                 <span></span>
                 <Button onClick={purchaseNewSubscription}>Purchase</Button>
             </div>
+            {subscriptions && <div className={styles.subscriptionInfo}>
+                <p>Credits: {subscriptions.credits}</p>
+                <p>Subscribed Until: {subscriptions.subscribedUntil}</p>
+                <p>Subscription Duration: {subscriptions.subscriptionDuration}</p>
+            </div> }
             <div className={styles.card}>
                 {listings && listings.map((listing) => (
                     <ListingCard key={listing.id} listing={listing}/>

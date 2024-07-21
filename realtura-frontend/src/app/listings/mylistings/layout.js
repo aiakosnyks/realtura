@@ -8,9 +8,7 @@ export const metadata = {
 export default function MyListingsLayout({ children }) {
   return (
       <div>
-          <AuthProvider>
-              {children}
-          </AuthProvider>
+          {children}
       </div>
   );
 }
