@@ -65,15 +65,8 @@ const Dashboard = () => {
     }, [userId]);
 
     const addNewListing =() => {
-        const now = new Date();
-        const subscribedUntilDate = new Date(subscriptions.subscribedUntil);
-
-        if (subscriptions && subscriptions.credit > 0 && subscribedUntilDate > now) {
-            console.log('Create listing page routed');
-            router.push("/listings/create");
-        } else {
-            toast.error('No subscription: ' + subscriptions.credit + ' ' + formatDate(subscriptions.subscribedUntil));
-        }
+        console.log('Create listing page routed');
+        router.push("/listings/create");
     }
 
     const purchaseNewSubscription =() => {
