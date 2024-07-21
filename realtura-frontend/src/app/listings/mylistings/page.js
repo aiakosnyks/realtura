@@ -47,13 +47,15 @@ const Dashboard = () => {
     }
     console.log(listings);
     return (
-        <div className={styles.main} >
-            <Button onClick={addNewListing}>Add New Listing</Button>
-            <span></span>
-            <Button onClick={purchaseNewSubscription}>Purchase</Button>
+        <div className={styles.main}>
+            <div className={styles.buttonContainer}>
+                <Button onClick={addNewListing}>Add New Listing</Button>
+                <span></span>
+                <Button onClick={purchaseNewSubscription}>Purchase</Button>
+            </div>
             <div className={styles.card}>
                 {listings && listings.map((listing) => (
-                    <ListingCard key={listing.id} listing={listing} />
+                    <ListingCard key={listing.id} listing={listing}/>
                 ))}
             </div>
 

@@ -12,14 +12,18 @@ const Subscribe = () => {
     const { userId } = useAuth();
 
     const onFinish = async (values) => {
-        console.log('handleLogin')
+        console.log('handleSubscripton')
         try {
+            const requestBody = {
+                ...values,
+                userId: userId
+            };
             const response = await fetch('http://localhost:8051/api/v1/subscriptions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({values, userId:userId}),
+                body: JSON.stringify(requestBody),
             });
             const res = await response.json();
             console.log('resjson:', JSON.stringify(res, null, 2)); // Improved logging

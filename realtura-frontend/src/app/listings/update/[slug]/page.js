@@ -44,20 +44,23 @@ const UpdateListing = ({ params }) => {
     }, [slug, form]);
 
     const onFinish = async (values) => {
-        const updatedValues = { ...values, userId: userId};
+        const requestBody = {
+            ...values,
+            userId: userId
+        };
         try {
             const response = await fetch(`http://localhost:8081/api/v1/listings/update/${slug}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(updatedValues),
+                body: JSON.stringify(requestBody),
             });
 
             const res = await response.json();
             if (response.ok && res.status === 'SUCCESS') {
                 message.success('Listing updated successfully!');
-                router.push('/listings/dashboard');
+                router.push('/listings/mylistings');
             } else {
                 message.error('Update failed: ' + (res.message || 'Unknown error'));
             }

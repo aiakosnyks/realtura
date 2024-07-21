@@ -1,9 +1,20 @@
+
 .main {
     display: flex;
-    vertical-align: middle;
-    justify-content: space-evenly;
+    flex-direction: column;
     align-items: center;
+}
 
+.buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 600px; /* Adjust as needed */
+    margin: 20px; /* Adjust as needed */
+}
+
+.buttonContainer > span {
+    flex-grow: 1;
 }
 
 .description {
