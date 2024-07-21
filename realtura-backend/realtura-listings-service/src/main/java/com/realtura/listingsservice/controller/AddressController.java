@@ -25,7 +25,7 @@ public class AddressController {
 //    @PostMapping
 //    public void save(@RequestBody AddressSaveRequest request) {
 //        addressService.save(request);
-//        log.info("New listing saved: {}", request);
+//        log.info("New subscriptions saved: {}", request);
 //    }
 //
 //    @GetMapping

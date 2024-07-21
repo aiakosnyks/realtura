@@ -90,7 +90,7 @@ class ListingsServiceApplicationTests {
         assertNotNull(response);
         assertTrue(response.getStatus().equals("SUCCESS"));
         assertEquals(HttpStatus.OK, response.getHttpStatus());
-        assertEquals("listing updated", response.getMessage());
+        assertEquals("subscriptions updated", response.getMessage());
     }
 
     @Test
@@ -106,6 +106,6 @@ class ListingsServiceApplicationTests {
         verify(listingRepository, times(1)).deleteById(request.getId());
         assertTrue(response.getStatus().equals("SUCCESS"));
         assertEquals(HttpStatus.OK, response.getHttpStatus());
-        assertEquals("listing deleted", response.getMessage());
+        assertEquals("subscriptions deleted", response.getMessage());
     }
 }

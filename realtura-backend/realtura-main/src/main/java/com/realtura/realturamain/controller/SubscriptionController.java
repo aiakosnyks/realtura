@@ -23,7 +23,12 @@ public class SubscriptionController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<GenericResponse<Subscription>> getSubscriptionByUserId(@PathVariable Long userId) {
+    public ResponseEntity<GenericResponse<Subscription>> getSubscriptionByUserId(@PathVariable Long userId, Long id) {
         return new ResponseEntity<>(subscriptionService.getSubscriptionsByUserId(userId), HttpStatus.OK);
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<GenericResponse<?>> updateCredits(@PathVariable Long userId) {
+        return new ResponseEntity<>(subscriptionService.update(userId), HttpStatus.OK);
     }
 }

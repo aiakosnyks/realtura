@@ -82,6 +82,18 @@ public class SubscriptionService {
         }
         return GenericResponse.success(subscription.get());
     }
+
+    public GenericResponse<Subscription> update(Long subscriptionId) {
+        Optional<Subscription> subscription = subscriptionRepository.findById(subscriptionId);
+        if (subscription.isEmpty()) {
+            log.error("Subscription " + subscriptionId + " not found");
+            throw new RuntimeException("Subscription not found");
+        }
+        Subscription subscriptionToBeUpdated = subscription.get();
+        subscriptionToBeUpdated.setCredits(subscriptionToBeUpdated.getCredits()-1);
+        Subscription created = subscriptionRepository.save(subscriptionToBeUpdated);
+        return GenericResponse.success(created);
+    }
 }
 
 

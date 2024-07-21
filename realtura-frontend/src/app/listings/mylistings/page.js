@@ -8,6 +8,7 @@ import {Button} from "antd";
 import {router} from "next/client";
 import {useRouter} from "next/navigation";
 import {format, isValid} from "date-fns";
+import {toast} from "react-toastify";
 
 const page = 0;
 const size = 10;
@@ -103,9 +104,17 @@ const Dashboard = () => {
     }, [userId]);
 
     const addNewListing =() => {
-        console.log('Create listing page routed');
-        router.push("/listings/create");
+        const now = new Date();
+        const subscribedUntilDate = new Date(subscriptions.subscribedUntil);
+
+        if (subscriptions && subscriptions.credit > 0 && subscribedUntilDate > now) {
+            console.log('Create listing page routed');
+            router.push("/listings/create");
+        } else {
+            toast.error('No subscription: ' + subscriptions.credit + ' ' + formatDate(subscriptions.subscribedUntil));
+        }
     }
+
     const purchaseNewSubscription =() => {
         console.log('Purchase subscription page routed');
         router.push("/subscribe");
@@ -125,6 +134,15 @@ const Dashboard = () => {
 
         return format(date, 'yyyy-MM-dd HH:mm:ss'); // Adjust the format as needed
     };
+    const checkCredits = (dateArray) => {
+        if (!Array.isArray(dateArray) || dateArray.length < 6) {
+            return "Invalid date";
+        }
+
+        const [year, month, day, hour, minute, second, millisecond] = dateArray;
+        const date = new Date(year, month - 1, day, hour, minute, second, millisecond / 1000000); // Adjust millisecond precision
+
+    }
     return (
         <div className={styles.main}>
             <div className={styles.buttonContainer}>
