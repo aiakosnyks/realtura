@@ -7,6 +7,7 @@ import {useEffect, useState} from "react";
 import {Button} from "antd";
 import {router} from "next/client";
 import {useRouter} from "next/navigation";
+import {format, isValid} from "date-fns";
 
 const page = 0;
 const size = 10;
@@ -110,6 +111,20 @@ const Dashboard = () => {
         router.push("/subscribe");
     }
     console.log(listings);
+    const formatDate = (dateArray) => {
+        if (!Array.isArray(dateArray) || dateArray.length < 6) {
+            return "Invalid date";
+        }
+
+        const [year, month, day, hour, minute, second, millisecond] = dateArray;
+        const date = new Date(year, month - 1, day, hour, minute, second, millisecond / 1000000); // Adjust millisecond precision
+
+        if (!isValid(date)) {
+            return "Invalid date";
+        }
+
+        return format(date, 'yyyy-MM-dd HH:mm:ss'); // Adjust the format as needed
+    };
     return (
         <div className={styles.main}>
             <div className={styles.buttonContainer}>
@@ -119,7 +134,7 @@ const Dashboard = () => {
             </div>
             {subscriptions && <div className={styles.subscriptionInfo}>
                 <p>Credits: {subscriptions.credits}</p>
-                <p>Subscribed Until: {subscriptions.subscribedUntil}</p>
+                <p>Subscribed Until: {formatDate(subscriptions.subscribedUntil)}</p>
                 <p>Subscription Duration: {subscriptions.subscriptionDuration}</p>
             </div> }
             <div className={styles.card}>

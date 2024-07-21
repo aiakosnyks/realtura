@@ -2,7 +2,7 @@ package com.realtura.realturamain.client.user.service;
 
 import com.realtura.realturamain.client.user.UserClient;
 import com.realtura.realturamain.dto.response.GenericResponse;
-import com.realtura.realturamain.model.User;
+import com.realtura.realturamain.dto.request.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

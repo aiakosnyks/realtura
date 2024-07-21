@@ -1,7 +1,7 @@
 package com.realtura.realturamain.client.user;
 
 import com.realtura.realturamain.dto.response.GenericResponse;
-import com.realtura.realturamain.model.User;
+import com.realtura.realturamain.dto.request.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
