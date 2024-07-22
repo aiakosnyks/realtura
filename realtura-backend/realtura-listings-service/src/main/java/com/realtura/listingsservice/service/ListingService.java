@@ -1,5 +1,6 @@
 package com.realtura.listingsservice.service;
 
+import com.realtura.listingsservice.client.subscriptions.service.SubscriptionService;
 import com.realtura.listingsservice.converter.ListingConverter;
 import com.realtura.listingsservice.dto.request.ListingDeleteRequest;
 import com.realtura.listingsservice.dto.request.ListingSaveRequest;
@@ -30,10 +31,12 @@ import java.util.Optional;
 @Service
 public class ListingService {
     private final ListingRepository listingRepository;
+    private final SubscriptionService subscriptionService;
 
     public GenericResponse<CreateResponse> save(ListingSaveRequest request) {
         Listing listing = ListingConverter.toListing(request, request.getAddress());
         Listing createdListing= listingRepository.save(listing);
+        subscriptionService.useCredit(request.getUserId());
         return GenericResponse.success(new CreateResponse(createdListing.getId()));
     }
 

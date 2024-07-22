@@ -16,16 +16,16 @@ import java.util.Optional;
 public interface UserClient {
 
     @PostMapping
-    public void save(@RequestBody User request);
+    void save(@RequestBody User request);
 
     @GetMapping
-    public List<User> getAll();
+    List<User> getAll();
 
     @GetMapping("/{id}")
-    public GenericResponse<Optional<User>> getById(@PathVariable Long id);
+    GenericResponse<Optional<User>> getById(@PathVariable Long id);
 
     @GetMapping("/email/{email}")
-    public GenericResponse<Optional<User>> getByEmail(@PathVariable String email) ;
+    GenericResponse<Optional<User>> getByEmail(@PathVariable String email) ;
 
 }
 

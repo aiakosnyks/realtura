@@ -28,7 +28,7 @@ public class SubscriptionController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<GenericResponse<?>> updateCredits(@PathVariable Long userId) {
+    public ResponseEntity<GenericResponse<?>> useCredit(@PathVariable Long userId) {
         return new ResponseEntity<>(subscriptionService.update(userId), HttpStatus.OK);
     }
 }
