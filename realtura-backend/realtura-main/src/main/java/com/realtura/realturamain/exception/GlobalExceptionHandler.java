@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(KitapYurdumException.class)
-    public GenericResponse<ExceptionResponse> handleException(KitapYurdumException exception) {
-        log.error(exception.getLocalizedMessage());
+    @ExceptionHandler(RealturaException.class)
+    public GenericResponse<ExceptionResponse> handleException(RealturaException exception) {
+        log.error(exception.getMessage());
         return GenericResponse.failed(exception.getMessage());
     }
 

@@ -14,7 +14,7 @@ public class GenericResponse<T> {
     private String status;
     private HttpStatus httpStatus;
     private T data;
-    private T error;
+    private ExceptionResponse error;
 
     public static GenericResponse<ExceptionResponse> failed(String message) {
         return GenericResponse.<ExceptionResponse>builder()

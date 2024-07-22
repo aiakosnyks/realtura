@@ -5,15 +5,15 @@ import {UploadOutlined} from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
 import {toast} from "react-toastify";
 import {useAuth} from "@/app/context/AuthContext";
+import {useRouter} from "next/navigation";
     const App = () => {
         const { userId, logout } = useAuth();
+        const router = useRouter();
 
         const onFinish = async (values) => {
-            console.log('Success:', values);
             const updatedValues = { ...values, userId: userId};
 
             try {
-                console.log('Success2:');
                 const response = await fetch('http://localhost:8081/api/v1/listings', {
                     method: 'POST',
                     headers: {
@@ -21,7 +21,6 @@ import {useAuth} from "@/app/context/AuthContext";
                     },
                     body: JSON.stringify(updatedValues),
                 });
-                console.log('Success3');
 
                 const res = await response.json();
                 console.log('resjson:', JSON.stringify(res, null, 2)); // Improved logging
@@ -29,13 +28,14 @@ import {useAuth} from "@/app/context/AuthContext";
                 if (response.ok) {
                     console.log('ok');
                     if (res.status === 'SUCCESS') {
-                        console.log('success');
-                        toast.success('Login successful!');
+                        console.log('Add Listing successful!');
+                        toast.success('Add Listing successful!');
+                        router.push("/listings/mylistings")
                     } else {
-                        toast.error('Login failed: ' + (data.message || 'Unknown error'));
+                        toast.error('Add Listing failed: ' + (data.message || 'Unknown error'));
                     }
                 } else {
-                    toast.error('Login failed: ' + (data.message || 'Unknown error'));
+                    toast.error('Add Listing failed: ' + (data.message || 'Unknown error'));
                 }
             } catch (error) {
                 toast.error('An error occurred: ' + (error.message || 'Unknown error'));

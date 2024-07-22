@@ -17,6 +17,11 @@ const nextConfig = {
                 hostname: 'www.redfin.com',
                 pathname: '/blog/wp-content/uploads/**',
             },
+            {
+                protocol: 'https',
+                hostname: 'cdn.evhayaliniz.com',
+                pathname: '/blog/wp-content/uploads/**',
+            },
         ],
     },
 };

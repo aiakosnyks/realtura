@@ -1,7 +1,6 @@
 package com.realtura.realturamain.controller;
 
 import com.realtura.realturamain.dto.request.SubscriptionSaveRequest;
-import com.realtura.realturamain.dto.response.CreateResponse;
 import com.realtura.realturamain.dto.response.GenericResponse;
 import com.realtura.realturamain.model.Subscription;
 import com.realtura.realturamain.service.SubscriptionService;

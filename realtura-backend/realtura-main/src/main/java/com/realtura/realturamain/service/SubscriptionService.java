@@ -4,6 +4,7 @@ import com.realtura.realturamain.client.user.service.UserService;
 import com.realtura.realturamain.dto.request.SubscriptionSaveRequest;
 import com.realtura.realturamain.dto.response.CreateResponse;
 import com.realtura.realturamain.dto.response.GenericResponse;
+import com.realtura.realturamain.exception.RealturaException;
 import com.realtura.realturamain.model.Product;
 import com.realtura.realturamain.model.Subscription;
 import com.realtura.realturamain.repository.SubscriptionRepository;
@@ -77,7 +78,7 @@ public class SubscriptionService {
         Optional<Subscription> subscription = subscriptionRepository.findByUserId(userId);
         if (subscription.isEmpty()) {
             log.error("User " + userId + " not found");
-            throw new RuntimeException("User not found");
+            throw new RealturaException("User not found");
         }
         return GenericResponse.success(subscription.get());
     }
@@ -86,12 +87,12 @@ public class SubscriptionService {
         Optional<Subscription> subscription = subscriptionRepository.findById(subscriptionId);
         if (subscription.isEmpty()) {
             log.error("Subscription {} not found", subscriptionId);
-            return GenericResponse.failed("Subscription not found");
+            throw new RealturaException("Subscription not found");
         }
         Subscription subscriptionToBeUpdated = subscription.get();
-        subscriptionToBeUpdated.setCredits(subscriptionToBeUpdated.getCredits()-1);
-        Subscription created = subscriptionRepository.save(subscriptionToBeUpdated);
-        return GenericResponse.success(created);
+        subscriptionToBeUpdated.setCredits(subscriptionToBeUpdated.getCredits() - 1);
+        Subscription updated = subscriptionRepository.save(subscriptionToBeUpdated);
+        return GenericResponse.success(updated);
     }
 }
 
