@@ -33,22 +33,13 @@ public class ListingService {
     private final ListingRepository listingRepository;
     private final SubscriptionService subscriptionService;
 
-    public GenericResponse<CreateResponse> save(ListingSaveRequest request) {
+    public GenericResponse<?> save(ListingSaveRequest request) {
         Listing listing = ListingConverter.toListing(request, request.getAddress());
+        GenericResponse<?> response = subscriptionService.useCredit(request.getUserId());
+        if (response.getStatus().equals("FAILED")) return response;
         Listing createdListing= listingRepository.save(listing);
-        subscriptionService.useCredit(request.getUserId());
         return GenericResponse.success(new CreateResponse(createdListing.getId()));
     }
-
-//    public List<Listing> getByZipCode(String zipCode) {
-//        List<Listing> foundListing = listingRepository.findByZipCode(zipCode);
-//        if (foundListing.isEmpty()) {
-//            log.error(ExceptionMessages.LISTING_NOT_FOUND);
-//            throw new RuntimeException(ExceptionMessages.LISTING_NOT_FOUND);
-//        }
-//        return foundListing;
-//    }
-
 
     //@Cacheable(value = "products", cacheNames = "products")
     public List<ListingResponse> getAllByFilter(ListingSearchRequest request) {

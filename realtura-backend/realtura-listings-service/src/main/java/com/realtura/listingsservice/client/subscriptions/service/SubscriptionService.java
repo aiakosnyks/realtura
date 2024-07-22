@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -18,14 +19,8 @@ public class SubscriptionService {
 
     private final SubscriptionClient subscriptionClient;
 
-    public Boolean useCredit(Long userId) {
-        ResponseEntity<GenericResponse<?>> response = subscriptionClient.useCredit(userId);
-        if (response == null || !HttpStatus.OK.equals(response.getStatusCode())) {
-            assert response != null;
-            log.error("Error Message: {}", response.getBody());
-            return true;
-        }
-        return false;
+    public GenericResponse<?> useCredit(Long userId) {
+        return subscriptionClient.useCredit(userId).getBody();
     }
 
 }

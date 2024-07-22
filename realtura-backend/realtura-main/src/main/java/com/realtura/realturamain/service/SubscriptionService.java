@@ -37,7 +37,7 @@ public class SubscriptionService {
 
 
     @Transactional()
-    public GenericResponse<CreateResponse> purchasePackage(SubscriptionSaveRequest request) {
+    public GenericResponse<?> purchasePackage(SubscriptionSaveRequest request) {
 
         Long userId = request.getUserId();
         double amount = request.getAmount();
@@ -45,9 +45,8 @@ public class SubscriptionService {
 
         if (userService.getUserById(userId).isEmpty()) {
             log.error("User " + userId + " not found");
-            throw new RuntimeException("User not found");
+            return GenericResponse.failed("User not found");
         }
-
         if (processPayment(userId, amount, productQuantity)) {
             Optional<Subscription> optionalSubscription = subscriptionRepository.findByUserId(userId);
             Subscription created = null;
@@ -83,11 +82,11 @@ public class SubscriptionService {
         return GenericResponse.success(subscription.get());
     }
 
-    public GenericResponse<Subscription> update(Long subscriptionId) {
+    public GenericResponse<?> update(Long subscriptionId) {
         Optional<Subscription> subscription = subscriptionRepository.findById(subscriptionId);
         if (subscription.isEmpty()) {
-            log.error("Subscription " + subscriptionId + " not found");
-            throw new RuntimeException("Subscription not found");
+            log.error("Subscription {} not found", subscriptionId);
+            return GenericResponse.failed("Subscription not found");
         }
         Subscription subscriptionToBeUpdated = subscription.get();
         subscriptionToBeUpdated.setCredits(subscriptionToBeUpdated.getCredits()-1);

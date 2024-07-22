@@ -18,7 +18,7 @@ public class SubscriptionController {
     private final SubscriptionService subscriptionService;
 
     @PostMapping
-    public ResponseEntity<GenericResponse<CreateResponse>> save(@RequestBody SubscriptionSaveRequest request) {
+    public ResponseEntity<GenericResponse<?>> save(@RequestBody SubscriptionSaveRequest request) {
         return new ResponseEntity<>(subscriptionService.purchasePackage(request), HttpStatus.OK);
     }
 

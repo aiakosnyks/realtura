@@ -24,7 +24,7 @@ public class ListingController {
     private final ListingService listingService;
 
     @PostMapping
-    public ResponseEntity<GenericResponse<CreateResponse>> save(@RequestBody ListingSaveRequest request) {
+    public ResponseEntity<GenericResponse<?>> save(@RequestBody ListingSaveRequest request) {
         log.info("New subscriptions saved: {}", request);
         return new ResponseEntity<>(listingService.save(request), HttpStatus.OK);
     }
